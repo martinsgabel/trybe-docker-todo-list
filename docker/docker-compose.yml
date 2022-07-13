@@ -2,25 +2,24 @@ version: '3'
 
 services:
   todofront:
-    # state the image or the dockerfile to build one
-    build: ./todo-app/front-end/
+    build: ./todo-app/front-end
     restart: on-failure
-    ports:
-      - 3000:3000
+    # ports:
+    #   - 3000:3000
     environment:
-      - REACT_APP_API_HOST=todobackend
+      REACT_APP_API_HOST: todobackend
+      REACT_APP_API_PORT: 3001
     depends_on:
       - todoback
   todoback:
-    build: ./todo-app/back-end/
+    build: ./todo-app/back-end
     restart: on-failure
-    ports:
-      - 3001:3001
   todotests:
-      build: ./todo-app/tests/
+      build: ./todo-app/tests
   restart: on-failure
   environment:
-    - FRONT_HOST=todofrontend
+    FRONT_HOST: todofrontend
+    FRONT_PORT: 3000
   depends_on:
       - todofront
       - todoback
